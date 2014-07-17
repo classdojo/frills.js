@@ -1,6 +1,6 @@
 {
   "name": "frills",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "frills.js =========",
   "main": "./lib/index.js",
   "scripts": {

@@ -1,5 +1,6 @@
 var frills = require(".."),
-expect     = require("expect.js");
+expect     = require("expect.js"),
+protoclass = require("protoclass");
 
 describe("frills#", function () {
 
@@ -96,5 +97,61 @@ describe("frills#", function () {
 
     expect(a.found).to.be(undefined);
   });
+
+  it("doesn't attach a decorator multiple times if multi is false", function () {
+    var p = function() {
+
+    };
+
+    protoclass(p);
+
+    var c = p.extend({});
+
+    var d = frills();
+    d.use({
+      getOptions: function (target) {
+        return true;
+      },
+      decorate: function (target, options) {
+      }
+    });
+
+    var c1 = new c();
+
+    d.decorate(c1);
+
+    expect(c1.__decorators.length).to.be(1);
+
+  });
+
+  it("attaches a decorator multiple times if multi is true", function () {
+    var p = function() {
+
+    };
+
+    protoclass(p, {
+      part: true
+    });
+
+    var c = p.extend({});
+
+    var d = frills();
+    d.use({
+      multi: true,
+      getOptions: function (target) {
+        return target.part;
+      },
+      decorate: function (target, options) {
+      }
+    });
+
+    var c1 = new c();
+
+    d.decorate(c1);
+
+    expect(c1.__decorators.length).to.be(2);
+
+  });
+
 
 });

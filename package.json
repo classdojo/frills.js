@@ -1,6 +1,6 @@
 {
   "name": "frills",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "frills.js =========",
   "main": "./lib/index.js",
   "scripts": {
@@ -18,7 +18,8 @@
   "homepage": "https://github.com/classdojo/frills.js",
   "devDependencies": {
     "expect.js": "0.3.1",
-    "mocha": "1.20.1"
+    "mocha": "1.20.1",
+    "protoclass": "0.0.5"
   },
   "dependencies": {
     "protoclass": "0.0.x"

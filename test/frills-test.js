@@ -69,9 +69,7 @@ describe("frills#", function () {
 
     var a = new clazz();
 
-    expect(a.__decorators).to.be(undefined);
     d.decorate(a);
-    expect(a.__decorators).not.to.be(undefined);
 
     expect(a.found).to.be(1);
   });
@@ -108,11 +106,13 @@ describe("frills#", function () {
     var c = p.extend({});
 
     var d = frills();
+    var i = 0;
     d.use({
       getOptions: function (target) {
         return true;
       },
       decorate: function (target, options) {
+        i++;
       }
     });
 
@@ -120,7 +120,7 @@ describe("frills#", function () {
 
     d.decorate(c1);
 
-    expect(c1.__decorators.length).to.be(1);
+    expect(i).to.be(1);
 
   });
 
@@ -136,12 +136,14 @@ describe("frills#", function () {
     var c = p.extend({});
 
     var d = frills();
+    var i = 0;
     d.use({
       multi: true,
       getOptions: function (target) {
         return target.part;
       },
       decorate: function (target, options) {
+        i++;
       }
     });
 
@@ -149,7 +151,7 @@ describe("frills#", function () {
 
     d.decorate(c1);
 
-    expect(c1.__decorators.length).to.be(2);
+    expect(i).to.be(2);
 
   });
 

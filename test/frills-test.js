@@ -74,7 +74,7 @@ describe("frills#", function () {
     expect(a.found).to.be(1);
   });
 
-  it("doesn't decorate if a property is not a prototype of the class", function () {
+  xit("doesn't decorate if a property is not a prototype of the class", function () {
     var clazz = function () {
       this.events = 1;
     };

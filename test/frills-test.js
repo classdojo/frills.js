@@ -4,21 +4,21 @@ protoclass = require("protoclass");
 
 describe("frills#", function () {
 
-  it("can create a new frills mixin", function () {
+  it("can create a new frills plugin", function () {
     frills();
   });
 
-  it("can register a mixin", function () {
+  it("can register a plugin", function () {
     var d = frills();
     d.use({
       getOptions: function (data) {
       },
-      mixin: function (target, options) {
+      plugin: function (target, options) {
       }
     })
   });
 
-  it("can prioritize mixins", function () {
+  it("can prioritize plugins", function () {
     var d = frills();
     d.priority("a", 1).priority("b", 2);
 
@@ -28,30 +28,30 @@ describe("frills#", function () {
     d.use(a = { prority: "a" });
     d.use(c = { prority: "c" });
 
-    expect(d._mixins[0]).to.be(c);
-    expect(d._mixins[1]).to.be(b);
-    expect(d._mixins[2]).to.be(a);
+    expect(d._plugins[0]).to.be(c);
+    expect(d._plugins[1]).to.be(b);
+    expect(d._plugins[2]).to.be(a);
   })
 
-  it("can mixin an object", function () {
+  it("can plugin an object", function () {
     var d = frills();
     d.use({
       getOptions: function (target) {
         return target.events;
       },
-      mixin: function (target, options) {
+      plugin: function (target, options) {
         target.found = options;
       }
     });
 
     var a = { events: 1 };
-    expect(Object.__mixins).to.be(undefined);
-    d.mixin(a);
-    expect(Object.__mixins).to.be(undefined);
+    expect(Object.__plugins).to.be(undefined);
+    d.plugin(a);
+    expect(Object.__plugins).to.be(undefined);
     expect(a.found).to.be(1);
   });
 
-  it("mixins from a class prototype", function () {
+  it("plugins from a class prototype", function () {
     var clazz = function () {
     };
 
@@ -62,19 +62,19 @@ describe("frills#", function () {
       getOptions: function (target) {
         return target.events;
       },
-      mixin: function (target, options) {
+      plugin: function (target, options) {
         target.found = options;
       }
     });
 
     var a = new clazz();
 
-    d.mixin(a);
+    d.plugin(a);
 
     expect(a.found).to.be(1);
   });
 
-  xit("doesn't mixin if a property is not a prototype of the class", function () {
+  xit("doesn't plugin if a property is not a prototype of the class", function () {
     var clazz = function () {
       this.events = 1;
     };
@@ -84,19 +84,19 @@ describe("frills#", function () {
       getOptions: function (target) {
         return target.events;
       },
-      mixin: function (target, options) {
+      plugin: function (target, options) {
         target.found = options;
       }
     });
 
     var a = new clazz(1);
 
-    d.mixin(a);
+    d.plugin(a);
 
     expect(a.found).to.be(undefined);
   });
 
-  it("doesn't attach a mixin multiple times if multi is false", function () {
+  it("doesn't attach a plugin multiple times if multi is false", function () {
     var p = function() {
 
     };
@@ -111,14 +111,14 @@ describe("frills#", function () {
       getOptions: function (target) {
         return true;
       },
-      mixin: function (target, options) {
+      plugin: function (target, options) {
         i++;
       }
     });
 
     var c1 = new c();
 
-    d.mixin(c1);
+    d.plugin(c1);
 
     expect(i).to.be(1);
 
@@ -143,20 +143,20 @@ describe("frills#", function () {
         if (target.subChild) return void 0;
         return true;
       },
-      mixin: function (target, options) {
+      plugin: function (target, options) {
         i++;
       }
     });
 
     var c1 = new c();
 
-    d.mixin(c1);
+    d.plugin(c1);
 
     expect(i).to.be(0);
 
   });
 
-  it("attaches a mixin multiple times if multi is true", function () {
+  it("attaches a plugin multiple times if multi is true", function () {
     var p = function() {
 
     };
@@ -174,14 +174,14 @@ describe("frills#", function () {
       getOptions: function (target) {
         return target.part;
       },
-      mixin: function (target, options) {
+      plugin: function (target, options) {
         i++;
       }
     });
 
     var c1 = new c();
 
-    d.mixin(c1);
+    d.plugin(c1);
 
     expect(i).to.be(2);
 

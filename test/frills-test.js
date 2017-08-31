@@ -20,13 +20,13 @@ describe("frills#", function () {
 
   it("can prioritize plugins", function () {
     var d = frills();
-    d.priority("a", 1).priority("b", 2);
+    d.priority("a", 1).priority("b", 2).priority("c", 3);
 
     var a, b, c;
 
-    d.use(b = { prority: "b" });
-    d.use(a = { prority: "a" });
-    d.use(c = { prority: "c" });
+    d.use(b = { priority: "b" });
+    d.use(a = { priority: "a" });
+    d.use(c = { priority: "c" });
 
     expect(d._plugins[0]).to.be(c);
     expect(d._plugins[1]).to.be(b);
